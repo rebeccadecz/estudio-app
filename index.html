@@ -1414,12 +1414,30 @@ async function generateVocab() {
       })
     });
     const data = await resp.json();
+    console.log('API data:', JSON.stringify(data).substring(0, 300));
     const text = data.content?.find(b => b.type === 'text')?.text || '';
-    // Extract JSON even if there's surrounding text
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('No JSON found in response');
-    const clean = jsonMatch[0];
-    const parsed = JSON.parse(clean);
+    console.log('Text:', text.substring(0, 200));
+    // Try multiple parsing strategies
+    let parsed;
+    try {
+      // Strategy 1: direct parse
+      parsed = JSON.parse(text);
+    } catch(e1) {
+      try {
+        // Strategy 2: extract JSON object
+        const jsonMatch = text.match(/\{[\s\S]*\}/);
+        if (jsonMatch) parsed = JSON.parse(jsonMatch[0]);
+      } catch(e2) {
+        try {
+          // Strategy 3: extract JSON array
+          const arrMatch = text.match(/\[[\s\S]*\]/);
+          if (arrMatch) parsed = { words: JSON.parse(arrMatch[0]) };
+        } catch(e3) {
+          throw new Error('Could not parse response: ' + text.substring(0, 100));
+        }
+      }
+    }
+    if (!parsed || !parsed.words) throw new Error('No words in response');
     parsed.words.forEach(w => {
       if (!state.words.find(x => x.es === w.es)) {
         state.words.push({ ...w, level: 'new', reviews: 0, nextReview: Date.now() });
@@ -1538,14 +1556,47 @@ function rateWord(rating) {
 
 // ========== GRAMMAR ==========
 const grammarData = [
-  { week: 1, title: 'Present Subjunctive Triggers', sub: 'querer que, esperar que, dudar que' },
-  { week: 2, title: 'Imperfect Subjunctive', sub: 'si clauses, reported speech' },
-  { week: 3, title: 'Ser vs. Estar', sub: 'nuanced states, identity vs. condition' },
-  { week: 4, title: 'Preterite vs. Imperfect', sub: 'narrative past, edge cases' },
-  { week: 5, title: 'Por vs. Para', sub: 'cause/purpose, advanced uses' },
-  { week: 6, title: 'Advanced Relative Clauses', sub: 'lo que, cuyo, quien' },
-  { week: 7, title: 'Conditional Perfect', sub: 'habría + past participle, hypotheticals' },
-  { week: 8, title: 'Discourse Connectors', sub: 'opinion writing, essay language' },
+const grammarData = [
+  { week: 1, title: 'Present Subjunctive Triggers', sub: 'querer que, esperar que, dudar que', exercises: [
+    { prompt: 'Complete: "Espero que tú ___ (venir) a la fiesta."', answer: 'vengas' },
+    { prompt: 'Complete: "No creo que ella ___ (saber) la verdad."', answer: 'sepa' },
+    { prompt: 'Translate: "I want you to study more." → Quiero que...', answer: 'Quiero que estudies más.' },
+  ]},
+  { week: 2, title: 'Imperfect Subjunctive', sub: 'si clauses, reported speech', exercises: [
+    { prompt: 'Complete: "Si yo ___ (tener) más tiempo, viajaría."', answer: 'tuviera' },
+    { prompt: 'Complete: "Me dijo que ___ (hacer) la tarea."', answer: 'hiciera' },
+    { prompt: 'Translate: "If she were here, she would understand."', answer: 'Si ella estuviera aquí, entendería.' },
+  ]},
+  { week: 3, title: 'Ser vs. Estar', sub: 'nuanced states, identity vs. condition', exercises: [
+    { prompt: '"La sopa ___ fría." — ser or estar? Why?', answer: 'está — temporary state/condition' },
+    { prompt: '"Él ___ aburrido en clase." — which verb and why?', answer: 'está — temporary feeling, not personality' },
+    { prompt: '"El concierto ___ en el teatro." — ser or estar?', answer: 'es — location of an event uses ser' },
+  ]},
+  { week: 4, title: 'Preterite vs. Imperfect', sub: 'narrative past, edge cases', exercises: [
+    { prompt: 'Choose: "Cuando era/fui joven, vivía/viví en Madrid."', answer: 'era, vivía — ongoing states in the past' },
+    { prompt: '"De repente, el teléfono sonó/sonaba." Which and why?', answer: 'sonó — sudden completed action' },
+    { prompt: 'Translate: "I was reading when she called."', answer: 'Estaba leyendo cuando ella llamó.' },
+  ]},
+  { week: 5, title: 'Por vs. Para', sub: 'cause/purpose, advanced uses', exercises: [
+    { prompt: '"Lo hice ___ ti." — por or para?', answer: 'por — on behalf of / because of you' },
+    { prompt: '"Salgo ___ Madrid mañana." — por or para?', answer: 'para — destination' },
+    { prompt: '"Gracias ___ tu ayuda." — por or para?', answer: 'por — reason/exchange' },
+  ]},
+  { week: 6, title: 'Advanced Relative Clauses', sub: 'lo que, cuyo, quien', exercises: [
+    { prompt: '"La escritora, ___ novela ganó el premio, habló ayer."', answer: 'cuya — whose (possession)' },
+    { prompt: '"___ estudia mucho, aprende mucho."', answer: 'Quien — he who / whoever' },
+    { prompt: 'Translate: "What I need is more time."', answer: 'Lo que necesito es más tiempo.' },
+  ]},
+  { week: 7, title: 'Conditional Perfect', sub: 'habría + past participle, hypotheticals', exercises: [
+    { prompt: '"Si hubiera sabido, ___." Complete with conditional perfect.', answer: 'habría venido / habría dicho algo' },
+    { prompt: 'Translate: "She would have called if she had known."', answer: 'Habría llamado si lo hubiera sabido.' },
+    { prompt: 'Complete: "Nosotros ___ (ir) si hubiera tiempo."', answer: 'habríamos ido' },
+  ]},
+  { week: 8, title: 'Discourse Connectors', sub: 'opinion writing, essay language', exercises: [
+    { prompt: 'Use "sin embargo" in a sentence of contrast.', answer: 'e.g. Me gusta la ciudad; sin embargo, prefiero el campo.' },
+    { prompt: 'Use "a pesar de que" in a sentence.', answer: 'e.g. A pesar de que llovía, salimos a caminar.' },
+    { prompt: 'Use "por lo tanto" in a sentence.', answer: 'e.g. Estudié mucho; por lo tanto, aprobé el examen.' },
+  ]},
 ];
 
 function renderGrammarTopics() {
@@ -1564,6 +1615,7 @@ function renderGrammarTopics() {
 }
 
 async function openGrammarWeek(week) {
+  state.grammarWeek = week;
   saveState();
   renderGrammarTopics();
 
@@ -1611,10 +1663,12 @@ Keep the whole lesson under 300 words. Do not use any markdown headers or extra 
       })
     });
     const data = await resp.json();
+    console.log('Grammar API:', JSON.stringify(data).substring(0, 200));
     const text = data.content?.find(b => b.type === 'text')?.text || '';
     renderLesson(text, g);
   } catch(e) {
-    document.getElementById('lesson-content').innerHTML = `<p style="color:var(--muted);font-size:0.85rem;">Could not load lesson. Check your connection.</p>`;
+    console.error('Grammar error:', e);
+    document.getElementById('lesson-content').innerHTML = `<p style="color:var(--muted);font-size:0.85rem;">Could not load lesson: ${e.message}</p>`;
   }
 
   // Render exercises
