@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="version" content="v3-20260408">
+<title>Estudio</title>
+<meta name="description" content="Your Spanish learning studio — vocabulary, grammar, journal, and lesson prep.">
+<meta name="theme-color" content="#1a1410">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Estudio">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #ede5d8;
+    --cream: #e2d9c8;
+    --terracotta: #c4623a;
+    --terracotta-light: #e8896a;
+    --terracotta-pale: #f5e0d5;
+    --terracotta-dark: #9e4a28;
+    --gold: #b8943f;
+    --gold-pale: #ede0c0;
+    --sage: #5a6e59;
+    --sage-pale: #dde8dd;
+    --muted: #7a6e62;
+    --border: #c8bfae;
+    --border-dark: #a89e8e;
+    --white: #f5efe4;
+  }
+
+- { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(–paper);
+color: var(–ink);
+font-family: ‘DM Sans’, sans-serif;
+font-weight: 300;
+min-height: 100vh;
+-webkit-text-size-adjust: 100%;
+}
+
+/* HEADER */
+header {
+background: var(–ink);
+color: var(–paper);
+padding: 0 2rem;
+display: flex;
+align-items: center;
+justify-content: space-between;
+height: 56px;
+position: sticky;
+top: 0;
+z-index: 100;
+border-bottom: 2px solid var(–terracotta);
+}
+
+.logo {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.3rem;
+letter-spacing: 0.02em;
+color: var(–paper);
+}
+
+.logo span {
+color: var(–terracotta-light);
+font-style: italic;
+}
+
+.streak-badge {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.75rem;
+color: var(–gold);
+letter-spacing: 0.05em;
+display: flex;
+align-items: center;
+gap: 0.4rem;
+}
+
+.streak-dot {
+width: 6px; height: 6px;
+background: var(–gold);
+border-radius: 50%;
+display: inline-block;
+}
+
+/* NAV */
+nav {
+background: var(–cream);
+border-bottom: 1px solid var(–border-dark);
+display: flex;
+gap: 0;
+overflow-x: auto;
+padding: 0 2rem;
+box-shadow: 0 2px 6px rgba(26,20,16,0.08);
+scrollbar-width: none;
+-webkit-overflow-scrolling: touch;
+}
+
+nav::-webkit-scrollbar { display: none; }
+
+nav button {
+background: none;
+border: none;
+border-bottom: 2px solid transparent;
+padding: 0.85rem 1.2rem;
+font-family: ‘DM Mono’, monospace;
+font-size: 0.72rem;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: var(–muted);
+cursor: pointer;
+white-space: nowrap;
+transition: all 0.2s;
+}
+
+nav button:hover { color: var(–terracotta); }
+
+nav button.active {
+color: var(–terracotta);
+border-bottom-color: var(–terracotta);
+font-weight: 500;
+}
+
+/* MAIN */
+main {
+max-width: 860px;
+margin: 0 auto;
+padding: 2.5rem 1.5rem;
+}
+
+.section { display: none; }
+.section.active { display: block; }
+
+/* SECTION HEADERS */
+.section-header {
+margin-bottom: 2rem;
+padding-bottom: 1rem;
+border-bottom: 2px solid var(–ink);
+display: flex;
+align-items: baseline;
+gap: 1rem;
+flex-wrap: wrap;
+}
+
+.section-header h2 {
+font-family: ‘Playfair Display’, serif;
+font-size: 2rem;
+font-weight: 600;
+margin-bottom: 0;
+flex: 1;
+}
+
+.section-header p {
+color: var(–muted);
+font-size: 0.82rem;
+letter-spacing: 0.01em;
+width: 100%;
+margin-top: 0.3rem;
+}
+
+/* CARDS */
+.card {
+background: var(–white);
+border: 1px solid var(–border);
+border-radius: 2px;
+padding: 1.5rem;
+margin-bottom: 1.2rem;
+box-shadow: 0 2px 8px rgba(26,20,16,0.10), 0 1px 2px rgba(26,20,16,0.06);
+}
+
+.card-label {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.65rem;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–terracotta);
+margin-bottom: 0.8rem;
+font-weight: 400;
+}
+
+/* BUTTONS */
+.btn {
+display: inline-block;
+padding: 0.6rem 1.4rem;
+font-family: ‘DM Mono’, monospace;
+font-size: 0.75rem;
+letter-spacing: 0.07em;
+text-transform: uppercase;
+border: none;
+cursor: pointer;
+transition: all 0.15s;
+border-radius: 1px;
+}
+
+.btn-primary {
+background: var(–terracotta);
+color: white;
+}
+
+.btn-primary:hover { background: var(–terracotta-dark); }
+
+.btn-secondary {
+background: transparent;
+color: var(–ink);
+border: 1px solid var(–border-dark);
+}
+
+.btn-secondary:hover { border-color: var(–terracotta); color: var(–terracotta); }
+
+.btn-ghost {
+background: transparent;
+color: var(–muted);
+border: 1px solid var(–border);
+}
+
+.btn-ghost:hover { color: var(–terracotta); border-color: var(–terracotta); }
+
+.btn-success {
+background: var(–sage);
+color: white;
+}
+
+/* INPUTS */
+input, textarea, select {
+width: 100%;
+background: var(–paper);
+border: 1px solid var(–border);
+border-radius: 1px;
+padding: 0.7rem 0.9rem;
+font-family: ‘DM Sans’, sans-serif;
+font-size: max(16px, 0.9rem);
+color: var(–ink);
+outline: none;
+transition: border-color 0.2s;
+-webkit-appearance: none;
+appearance: none;
+}
+
+input:focus, textarea:focus, select:focus {
+border-color: var(–terracotta);
+background: var(–white);
+}
+
+textarea { resize: vertical; line-height: 1.6; }
+select { background-image: url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘12’ height=‘8’ viewBox=‘0 0 12 8’%3E%3Cpath d=‘M1 1l5 5 5-5’ stroke=’%238a7e72’ fill=‘none’ stroke-width=‘1.5’/%3E%3C/svg%3E”); background-repeat: no-repeat; background-position: right 0.8rem center; padding-right: 2.2rem; }
+
+label {
+display: block;
+font-size: 0.78rem;
+color: var(–muted);
+margin-bottom: 0.4rem;
+letter-spacing: 0.03em;
+font-family: ‘DM Mono’, monospace;
+text-transform: uppercase;
+font-size: 0.65rem;
+letter-spacing: 0.08em;
+}
+
+.form-group { margin-bottom: 1rem; }
+
+/* ===== DASHBOARD ===== */
+.day-grid {
+display: grid;
+grid-template-columns: repeat(7, 1fr);
+gap: 0.5rem;
+margin-bottom: 1.5rem;
+}
+
+.day-cell {
+background: var(–cream);
+border: 1px solid var(–border);
+border-radius: 1px;
+padding: 0.8rem 0.4rem;
+text-align: center;
+cursor: pointer;
+transition: all 0.15s;
+color: var(–ink);
+}
+
+.day-cell:hover { border-color: var(–terracotta); background: var(–terracotta-pale); }
+
+.day-cell.active-day {
+background: var(–terracotta);
+border-color: var(–terracotta-dark);
+color: white;
+box-shadow: 0 2px 6px rgba(196,98,58,0.3);
+}
+
+.day-cell.completed {
+background: var(–sage);
+border-color: var(–sage);
+color: white;
+}
+
+.day-name {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.6rem;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: currentColor;
+margin-bottom: 0.4rem;
+}
+
+.day-task {
+font-size: 0.68rem;
+line-height: 1.3;
+font-weight: 400;
+color: currentColor;
+}
+
+.progress-row {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 1rem;
+margin-bottom: 1.5rem;
+}
+
+.stat-card {
+background: var(–white);
+border: 1px solid var(–border);
+border-top: 3px solid var(–terracotta);
+padding: 1.2rem;
+text-align: center;
+}
+
+.stat-num {
+font-family: ‘Playfair Display’, serif;
+font-size: 2.4rem;
+color: var(–terracotta);
+display: block;
+line-height: 1;
+margin-bottom: 0.4rem;
+}
+
+.stat-label {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.62rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–muted);
+}
+
+/* ===== VOCABULARY ===== */
+.vocab-card-flip {
+perspective: 800px;
+margin-bottom: 1.5rem;
+}
+
+.vocab-inner {
+width: 100%;
+min-height: 200px;
+position: relative;
+transform-style: preserve-3d;
+transition: transform 0.5s;
+cursor: pointer;
+}
+
+.vocab-inner.flipped { transform: rotateY(180deg); }
+
+.vocab-front, .vocab-back {
+position: absolute;
+width: 100%;
+min-height: 200px;
+backface-visibility: hidden;
+background: var(–white);
+border: 1px solid var(–border);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 2rem;
+text-align: center;
+}
+
+.vocab-back {
+transform: rotateY(180deg);
+background: var(–ink);
+color: var(–paper);
+border-top: 3px solid var(–terracotta);
+}
+
+.vocab-word {
+font-family: ‘Playfair Display’, serif;
+font-size: 2.4rem;
+font-weight: 400;
+margin-bottom: 0.5rem;
+}
+
+.vocab-pos {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.65rem;
+letter-spacing: 0.1em;
+color: var(–terracotta);
+text-transform: uppercase;
+background: var(–terracotta-pale);
+padding: 0.15rem 0.6rem;
+border-radius: 1px;
+margin-bottom: 0.3rem;
+}
+
+.vocab-back .vocab-word { color: var(–paper); }
+.vocab-back .vocab-pos { background: rgba(196,98,58,0.2); color: var(–terracotta-light); }
+
+.vocab-translation {
+font-size: 1rem;
+color: var(–terracotta-light);
+margin-bottom: 0.5rem;
+font-style: italic;
+}
+
+.vocab-example {
+font-size: 0.82rem;
+color: #a09890;
+line-height: 1.5;
+}
+
+.vocab-hint {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.62rem;
+color: var(–muted);
+letter-spacing: 0.05em;
+margin-top: 0.8rem;
+text-transform: uppercase;
+}
+
+.rating-row {
+display: flex;
+gap: 0.6rem;
+margin-bottom: 1rem;
+}
+
+.rating-row .btn { flex: 1; }
+
+.vocab-input-row {
+display: grid;
+grid-template-columns: 1fr 1fr 2fr;
+gap: 0.8rem;
+align-items: end;
+}
+
+.word-list { margin-top: 1rem; }
+
+.word-item {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0.65rem 0;
+border-bottom: 1px solid var(–cream);
+font-size: 0.85rem;
+}
+
+.word-item:last-child { border-bottom: none; }
+
+.word-es { font-weight: 500; font-family: ‘Playfair Display’, serif; font-style: italic; font-size: 0.95rem; }
+.word-en { color: var(–muted); font-size: 0.82rem; flex: 1; margin: 0 0.8rem; }
+
+.srs-badge {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.58rem;
+padding: 0.15rem 0.5rem;
+border-radius: 1px;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+}
+
+.srs-new { background: var(–cream); color: var(–muted); border: 1px solid var(–border); }
+.srs-learning { background: var(–terracotta-pale); color: var(–terracotta); border: 1px solid #e8c4b4; }
+.srs-review { background: var(–sage-pale); color: var(–sage); border: 1px solid #c8d4c7; }
+
+/* ===== GRAMMAR ===== */
+.grammar-topic {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 1rem 0;
+border-bottom: 1px solid var(–cream);
+cursor: pointer;
+transition: all 0.15s;
+}
+
+.grammar-topic:hover { padding-left: 0.4rem; }
+.grammar-topic:last-child { border-bottom: none; }
+
+.grammar-title { font-size: 0.9rem; font-weight: 500; }
+.grammar-sub { font-size: 0.75rem; color: var(–muted); margin-top: 0.2rem; font-style: italic; }
+
+.grammar-status {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.62rem;
+padding: 0.2rem 0.6rem;
+border-radius: 1px;
+letter-spacing: 0.06em;
+white-space: nowrap;
+text-transform: uppercase;
+}
+
+.status-current { background: var(–terracotta); color: white; }
+.status-done { background: var(–sage); color: white; }
+.status-upcoming { background: var(–cream); color: var(–muted); border: 1px solid var(–border); }
+
+.grammar-exercise {
+background: var(–terracotta-pale);
+border: 1px solid #e8c4b4;
+border-left: 3px solid var(–terracotta);
+border-radius: 1px;
+padding: 1.2rem;
+margin-bottom: 1rem;
+}
+
+.grammar-prompt {
+font-size: 0.9rem;
+line-height: 1.6;
+margin-bottom: 0.6rem;
+font-weight: 500;
+}
+
+.grammar-answer {
+background: var(–white);
+border: 1px solid var(–border);
+border-radius: 1px;
+padding: 0.7rem;
+font-style: italic;
+color: var(–sage);
+font-size: 0.85rem;
+display: none;
+margin-top: 0.4rem;
+}
+
+.grammar-answer.visible { display: block; }
+
+/* ===== JOURNAL ===== */
+.journal-date {
+font-family: ‘Playfair Display’, serif;
+font-style: italic;
+font-size: 1.1rem;
+color: var(–terracotta);
+margin-bottom: 1.2rem;
+display: block;
+border-bottom: 1px solid var(–border);
+padding-bottom: 0.8rem;
+}
+
+.journal-entry {
+display: flex;
+align-items: flex-start;
+gap: 1rem;
+padding: 1rem 0;
+border-bottom: 1px solid var(–cream);
+}
+
+.journal-date-stamp {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.62rem;
+color: var(–terracotta);
+letter-spacing: 0.06em;
+white-space: nowrap;
+min-width: 70px;
+padding-top: 0.2rem;
+text-transform: uppercase;
+}
+
+.journal-text {
+font-size: 0.88rem;
+line-height: 1.6;
+flex: 1;
+font-family: ‘Playfair Display’, serif;
+font-style: italic;
+}
+
+.journal-word-count {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.62rem;
+color: var(–muted);
+text-align: right;
+margin-top: 0.4rem;
+}
+
+.feedback-box {
+background: var(–sage-pale);
+border: 1px solid #c8d4c7;
+border-left: 3px solid var(–sage);
+border-radius: 1px;
+padding: 1rem 1.2rem;
+margin-top: 1rem;
+font-size: 0.85rem;
+line-height: 1.7;
+display: none;
+}
+
+.feedback-box.visible { display: block; }
+.feedback-box h4 {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.65rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–sage);
+margin-bottom: 0.6rem;
+}
+
+/* ===== LISTENING ===== */
+.podcast-row {
+display: flex;
+align-items: center;
+gap: 1rem;
+padding: 0.9rem 0;
+border-bottom: 1px solid var(–cream);
+}
+
+.podcast-icon {
+width: 38px; height: 38px;
+background: var(–terracotta-pale);
+border: 1px solid #e8c4b4;
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-size: 1rem;
+flex-shrink: 0;
+}
+
+.podcast-info { flex: 1; }
+.podcast-name { font-size: 0.9rem; font-weight: 500; }
+.podcast-desc { font-size: 0.75rem; color: var(–muted); margin-top: 0.1rem; }
+
+.log-item {
+display: flex;
+align-items: center;
+gap: 0.8rem;
+padding: 0.6rem 0;
+border-bottom: 1px solid var(–cream);
+font-size: 0.82rem;
+}
+
+.log-dot {
+width: 8px; height: 8px;
+background: var(–terracotta);
+border-radius: 50%;
+flex-shrink: 0;
+}
+
+.log-podcast { font-weight: 500; flex: 1; }
+.log-time { font-family: ‘DM Mono’, monospace; font-size: 0.65rem; color: var(–muted); }
+
+/* ===== LESSON PREP ===== */
+.prep-checklist { list-style: none; }
+
+.prep-item {
+display: flex;
+align-items: flex-start;
+gap: 0.8rem;
+padding: 0.8rem 0;
+border-bottom: 1px solid var(–cream);
+font-size: 0.88rem;
+}
+
+.prep-check {
+width: 18px; height: 18px;
+border: 1px solid var(–border-dark);
+border-radius: 1px;
+cursor: pointer;
+flex-shrink: 0;
+display: flex; align-items: center; justify-content: center;
+margin-top: 1px;
+transition: all 0.15s;
+}
+
+.prep-check.checked {
+background: var(–terracotta);
+border-color: var(–terracotta-dark);
+color: white;
+font-size: 0.7rem;
+}
+
+.divider { height: 1px; background: var(–border); margin: 1.5rem 0; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+@media (max-width: 600px) {
+/* Layout */
+main { padding: 1.2rem 0.9rem; }
+.section-header { margin-bottom: 1.4rem; }
+.section-header h2 { font-size: 1.5rem; }
+
+```
+/* Nav — hide scrollbar, bigger tap targets */
+nav { padding: 0 0.5rem; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+nav::-webkit-scrollbar { display: none; }
+nav button { padding: 0.9rem 0.9rem; font-size: 0.68rem; }
+
+/* Header — compress on small screens */
+header { padding: 0 1rem; }
+#sync-status { display: none; }
+
+/* Cards */
+.card { padding: 1.1rem; margin-bottom: 0.9rem; }
+
+/* Day grid — tighter but legible */
+.day-grid { gap: 0.25rem; }
+.day-cell { padding: 0.65rem 0.1rem; }
+.day-name { font-size: 0.58rem; letter-spacing: 0.04em; }
+.day-task { font-size: 0.62rem; line-height: 1.25; }
+
+/* Stats */
+.progress-row { gap: 0.6rem; }
+.stat-card { padding: 0.9rem 0.5rem; }
+.stat-num { font-size: 1.8rem; }
+.stat-label { font-size: 0.55rem; }
+
+/* Vocab */
+.vocab-input-row { grid-template-columns: 1fr; }
+.vocab-word { font-size: 1.9rem; }
+.rating-row { gap: 0.4rem; }
+.rating-row .btn { padding: 0.75rem 0.3rem; font-size: 0.68rem; min-height: 44px; }
+
+/* Grammar exercises — stack input+button vertically */
+.exercise-row { flex-direction: column !important; }
+.exercise-row input { min-width: unset !important; }
+.exercise-row .btn { width: 100%; }
+
+/* Buttons — minimum 44px touch targets */
+.btn { min-height: 44px; display: flex; align-items: center; justify-content: center; }
+a.btn { display: inline-flex; }
+
+/* Prep checkboxes — bigger touch target */
+.prep-check { width: 24px; height: 24px; flex-shrink: 0; }
+
+/* Two col */
+.two-col { grid-template-columns: 1fr; }
+
+/* Podcast open button */
+.podcast-row .btn { padding: 0.6rem 0.7rem; font-size: 0.65rem; }
+
+/* Journal textarea */
+#journal-text { font-size: 1rem; }
+
+/* Lesson examples — stack on mobile */
+.lesson-example { flex-direction: column; gap: 0.2rem; }
+.example-en { text-align: left; min-width: unset; font-size: 0.8rem; }
+```
+
+}
+
+@media (min-width: 601px) and (max-width: 860px) {
+main { padding: 2rem 1.2rem; }
+.vocab-input-row { grid-template-columns: 1fr 1fr; }
+.vocab-input-row .form-group:last-child { grid-column: 1/-1; }
+}
+
+@media (min-width: 861px) {
+/* Desktop enhancements */
+main { padding: 3rem 2rem; }
+.card { padding: 1.8rem; }
+.section-header h2 { font-size: 2.2rem; }
+.day-cell { padding: 1rem 0.5rem; }
+.day-name { font-size: 0.65rem; }
+.day-task { font-size: 0.75rem; }
+nav button { padding: 1rem 1.4rem; }
+.stat-num { font-size: 2.6rem; }
+.vocab-word { font-size: 2.8rem; }
+.grammar-topic:hover { background: var(–terracotta-pale); padding-left: 0.8rem; border-radius: 1px; }
+.progress-row { gap: 1.5rem; }
+.stat-card { padding: 1.5rem; }
+}
+
+.loading-dots::after {
+content: ‘…’;
+animation: dots 1.2s steps(4, end) infinite;
+}
+@keyframes dots {
+0%, 20% { content: ‘.’; }
+40% { content: ‘..’; }
+60%, 100% { content: ‘…’; }
+}
+
+.tag {
+display: inline-block;
+font-family: ‘DM Mono’, monospace;
+font-size: 0.62rem;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+padding: 0.2rem 0.5rem;
+background: var(–cream);
+color: var(–muted);
+border-radius: 1px;
+margin-right: 0.3rem;
+border: 1px solid var(–border);
+}
+
+.lesson-intro {
+font-size: 0.92rem;
+line-height: 1.8;
+margin-bottom: 1.2rem;
+color: var(–ink);
+font-family: ‘Playfair Display’, serif;
+font-style: italic;
+}
+
+.lesson-rule {
+background: var(–terracotta-pale);
+border-left: 3px solid var(–terracotta);
+padding: 0.9rem 1.1rem;
+margin-bottom: 1rem;
+font-size: 0.88rem;
+line-height: 1.65;
+border-radius: 0 1px 1px 0;
+}
+
+.lesson-rule strong { color: var(–terracotta-dark); }
+
+.lesson-examples { margin-bottom: 1.2rem; }
+
+.lesson-example {
+display: flex;
+gap: 1rem;
+padding: 0.55rem 0;
+border-bottom: 1px solid var(–cream);
+font-size: 0.85rem;
+align-items: baseline;
+}
+
+.example-es { font-style: italic; flex: 1; color: var(–ink); }
+.example-en { color: var(–muted); font-size: 0.78rem; min-width: 40%; text-align: right; }
+
+.lesson-section-label {
+font-family: ‘DM Mono’, monospace;
+font-size: 0.62rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–terracotta);
+margin: 1.2rem 0 0.6rem;
+}
+
+.exercise-result { font-size: 0.8rem; margin-top: 0.4rem; }
+.exercise-result.correct { color: var(–sage); }
+.exercise-result.incorrect { color: var(–terracotta); }
+</style>
+
+</head>
+<body style="background:#ede5d8;color:#1a1410;">
+<script>
+// Force correct background immediately before any CSS loads
+document.documentElement.style.background = '#f2ece0';
+document.body && (document.body.style.background = '#f2ece0');
+</script>
+
+<header>
+  <div style="display:flex;align-items:center;gap:0.7rem;">
+    <svg width="20" height="28" viewBox="0 0 20 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+      <!-- Eraser -->
+      <rect x="6" y="1" width="8" height="4" rx="1" fill="#c4623a"/>
+      <!-- Ferrule line -->
+      <rect x="6" y="4.5" width="8" height="1" fill="#9e4a28" opacity="0.5"/>
+      <!-- Body -->
+      <rect x="6" y="5" width="8" height="16" fill="#f5f0e8"/>
+      <!-- Center line -->
+      <rect x="9.5" y="5" width="1" height="16" fill="#d4ccc0" opacity="0.6"/>
+      <!-- Tip wood -->
+      <polygon points="6,21 14,21 10,27" fill="#e8c89a"/>
+      <!-- Tip point -->
+      <polygon points="8,24 12,24 10,27" fill="#b8943f"/>
+    </svg>
+    <div class="logo">es<span>tudio</span></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:1.2rem;">
+    <span id="sync-status" style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.05em;color:var(--muted);"></span>
+    <div class="streak-badge">
+      <span class="streak-dot"></span>
+      <span id="streak-display">0 day streak</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <button class="active" onclick="showSection('dashboard')">Plan</button>
+  <button onclick="showSection('vocab')">Vocabulary</button>
+  <button onclick="showSection('grammar')">Grammar</button>
+  <button onclick="showSection('journal')">Journal</button>
+  <button onclick="showSection('listening')">Listening</button>
+  <button onclick="showSection('lesson')">Lesson Prep</button>
+</nav>
+
+<main>
+
+  <!-- DASHBOARD -->
+
+  <section id="dashboard" class="section active">
+    <div class="section-header">
+      <h2>This week</h2>
+      <p>Your B1/B2 → C1 weekly plan. 10–15 min daily + 50 min lesson.</p>
+    </div>
+
+```
+<div class="progress-row">
+  <div class="stat-card">
+    <span class="stat-num" id="words-learned">0</span>
+    <span class="stat-label">Words learned</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-num" id="entries-written">0</span>
+    <span class="stat-label">Entries written</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-num" id="sessions-done">0</span>
+    <span class="stat-label">Sessions done</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-label">Weekly schedule</div>
+  <div class="day-grid">
+    <div class="day-cell" id="day-0" onclick="markDay(0)">
+      <div class="day-name" style="color:inherit;opacity:1;">Mon</div>
+      <div class="day-task" style="color:inherit;">Vocabulary</div>
+    </div>
+    <div class="day-cell" id="day-1" onclick="markDay(1)">
+      <div class="day-name" style="color:inherit;opacity:1;">Tue</div>
+      <div class="day-task" style="color:inherit;">Grammar</div>
+    </div>
+    <div class="day-cell" id="day-2" onclick="markDay(2)">
+      <div class="day-name" style="color:inherit;opacity:1;">Wed</div>
+      <div class="day-task" style="color:inherit;">Vocabulary</div>
+    </div>
+    <div class="day-cell" id="day-3" onclick="markDay(3)">
+      <div class="day-name" style="color:inherit;opacity:1;">Thu</div>
+      <div class="day-task" style="color:inherit;">Grammar</div>
+    </div>
+    <div class="day-cell" id="day-4" onclick="markDay(4)">
+      <div class="day-name" style="color:inherit;opacity:1;">Fri</div>
+      <div class="day-task" style="color:inherit;">Vocabulary</div>
+    </div>
+    <div class="day-cell" id="day-5" onclick="markDay(5)">
+      <div class="day-name" style="color:inherit;opacity:1;">Sat</div>
+      <div class="day-task" style="color:inherit;">Listening</div>
+    </div>
+    <div class="day-cell" id="day-6" onclick="markDay(6)">
+      <div class="day-name" style="color:inherit;opacity:1;">Sun</div>
+      <div class="day-task" style="color:inherit;">Free write</div>
+    </div>
+  </div>
+  <p style="font-size:0.75rem;color:var(--muted);">Click a day to mark it complete.</p>
+</div>
+
+<div class="card">
+  <div class="card-label">8-week grammar sequence</div>
+  <div style="font-size:0.85rem;line-height:2;color:var(--ink);">
+    <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.4rem;">
+      <span class="tag" style="background:var(--terracotta);color:white;">Week 1</span>
+      Present subjunctive triggers — querer que, esperar que, dudar que
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.4rem;">
+      <span class="tag">Week 2</span> Imperfect subjunctive — si clauses, reported speech
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.4rem;">
+      <span class="tag">Week 3</span> Ser vs. estar — nuanced states, identity vs. condition
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.4rem;">
+      <span class="tag">Week 4</span> Preterite vs. imperfect — narrative past, edge cases
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.4rem;">
+      <span class="tag">Week 5</span> Por vs. para — cause/purpose, advanced uses
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.4rem;">
+      <span class="tag">Week 6</span> Advanced relative clauses — lo que, cuyo, quien
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.4rem;">
+      <span class="tag">Week 7</span> Conditional perfect & hypotheticals
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center;">
+      <span class="tag">Week 8</span> Discourse connectors for opinion writing
+    </div>
+  </div>
+</div>
+```
+
+  </section>
+
+  <!-- VOCABULARY -->
+
+  <section id="vocab" class="section">
+    <div class="section-header">
+      <h2>Vocabulary</h2>
+      <p>AI-generated word sets for your level and interests. Review with spaced repetition.</p>
+    </div>
+
+```
+<div class="card">
+  <div class="card-label">Generate new words</div>
+  <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;">Choose a theme and get 8 curated B1/B2 words tailored to your interests in culture, music, literature, and journalism.</p>
+  <div class="form-group">
+    <label>Theme</label>
+    <select id="vocab-theme">
+      <option value="classical music and opera">Classical music & opera</option>
+      <option value="literary fiction and books">Literary fiction & books</option>
+      <option value="journalism and media">Journalism & media</option>
+      <option value="dance and performance">Dance & performance</option>
+      <option value="art and visual culture">Art & visual culture</option>
+      <option value="everyday opinion and debate">Opinion & debate</option>
+      <option value="travel and place">Travel & place</option>
+      <option value="emotions and inner life">Emotions & inner life</option>
+    </select>
+  </div>
+  <button class="btn btn-primary" id="generate-vocab-btn" onclick="generateVocab()">Generate word set</button>
+  <div id="vocab-generating" style="display:none;margin-top:0.8rem;font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);letter-spacing:0.05em;">Generating<span class="loading-dots"></span></div>
+</div>
+
+<div id="flashcard-area" style="display:none;">
+  <div class="card" style="padding:0;">
+    <div style="padding:1rem 1.5rem 0.5rem;display:flex;align-items:center;justify-content:space-between;">
+      <div class="card-label" style="margin:0;">Card <span id="review-word-num">1</span> of <span id="review-word-total">0</span></div>
+      <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);" id="vocab-theme-label"></div>
+    </div>
+    <div class="vocab-card-flip" style="margin:0;">
+      <div class="vocab-inner" id="vocab-inner" onclick="flipCard()">
+        <div class="vocab-front">
+          <div class="vocab-word" id="card-word">—</div>
+          <div class="vocab-pos" id="card-pos">—</div>
+          <div class="vocab-hint">tap to reveal</div>
+        </div>
+        <div class="vocab-back">
+          <div class="vocab-word" id="card-translation">—</div>
+          <div class="vocab-translation" id="card-example">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="rating-row" style="padding:0.8rem 1rem;">
+      <button class="btn btn-ghost" onclick="rateWord('again')">Again</button>
+      <button class="btn btn-ghost" onclick="rateWord('hard')">Hard</button>
+      <button class="btn btn-secondary" onclick="rateWord('good')">Good</button>
+      <button class="btn btn-success" onclick="rateWord('easy')">Easy</button>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-label">Word bank (<span id="word-count">0</span>)</div>
+  <div id="word-list" class="word-list">
+    <p style="color:var(--muted);font-size:0.82rem;">Generate your first word set above.</p>
+  </div>
+  <div style="margin-top:1rem;display:flex;gap:0.6rem;flex-wrap:wrap;">
+    <button class="btn btn-primary" onclick="startReview()" id="review-btn" style="display:none;">Review all words</button>
+    <button class="btn btn-ghost" onclick="clearWords()" id="clear-btn" style="display:none;">Clear bank</button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-label">Add a word manually</div>
+  <div class="vocab-input-row">
+    <div class="form-group">
+      <label>Spanish</label>
+      <input type="text" id="new-word-es" placeholder="e.g. imprescindible">
+    </div>
+    <div class="form-group">
+      <label>Part of speech</label>
+      <select id="new-word-pos">
+        <option>adj.</option><option>noun</option><option>verb</option><option>adv.</option><option>phrase</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Translation / example</label>
+      <input type="text" id="new-word-en" placeholder="essential / Es imprescindible estudiar.">
+    </div>
+  </div>
+  <button class="btn btn-secondary" onclick="addWord()">Add word</button>
+</div>
+```
+
+  </section>
+
+  <!-- GRAMMAR -->
+
+  <section id="grammar" class="section">
+    <div class="section-header">
+      <h2>Grammar</h2>
+      <p>Guided lessons with explanations, examples, and exercises. One week at a time.</p>
+    </div>
+
+```
+<div class="card">
+  <div class="card-label">8-week sequence</div>
+  <div id="grammar-topics"></div>
+</div>
+
+<div id="grammar-lesson-area" style="display:none;">
+  <div class="card" id="grammar-lesson-card">
+    <div class="card-label" id="lesson-week-label"></div>
+    <div id="lesson-content"></div>
+  </div>
+
+  <div class="card" id="grammar-exercise-card">
+    <div class="card-label">Exercises</div>
+    <div id="exercises-container"></div>
+    <div class="divider"></div>
+    <div class="form-group">
+      <label>Write 2–3 original sentences using what you just learned</label>
+      <textarea id="grammar-sentences" rows="4" placeholder="Write your own sentences here..."></textarea>
+    </div>
+    <div style="display:flex;gap:0.6rem;margin-top:0.5rem;">
+      <button class="btn btn-primary" onclick="getGrammarFeedback()">Get AI feedback</button>
+    </div>
+    <div class="feedback-box" id="grammar-feedback">
+      <h4>Feedback</h4>
+      <div id="grammar-feedback-text"></div>
+    </div>
+  </div>
+</div>
+```
+
+  </section>
+
+  <!-- JOURNAL -->
+
+  <section id="journal" class="section">
+    <div class="section-header">
+      <h2>Free write</h2>
+      <p>10 minutes, Sunday evenings. No looking things up. Bring this to your lesson.</p>
+    </div>
+
+```
+<div class="card" style="position:relative;overflow:hidden;">
+  <!-- Pencil watermark -->
+  <svg width="80" height="110" viewBox="0 0 20 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;right:-10px;bottom:-10px;opacity:0.06;pointer-events:none;">
+    <rect x="6" y="1" width="8" height="4" rx="1" fill="#c4623a"/>
+    <rect x="6" y="5" width="8" height="16" fill="#1a1410"/>
+    <polygon points="6,21 14,21 10,27" fill="#b8943f"/>
+    <polygon points="8.5,24 11.5,24 10,27" fill="#1a1410"/>
+  </svg>
+  <span class="journal-date" id="today-date"></span>
+  <div class="form-group">
+    <label>Prompt (optional)</label>
+    <select id="journal-prompt" style="margin-bottom:0.8rem;">
+      <option value="">Free write — no prompt</option>
+      <option value="Describe something you did this week in Spanish.">Describe something you did this week.</option>
+      <option value="¿Qué opinas sobre...? Write an opinion on any topic.">Write an opinion: ¿Qué opinas sobre...?</option>
+      <option value="Describe a place you love using sensory language.">Describe a place you love.</option>
+      <option value="Write about a piece of music, dance, or art that moved you.">A piece of art that moved you.</option>
+      <option value="Write about your plans for the next month.">Your plans for the next month.</option>
+    </select>
+    <div id="prompt-display" style="font-size:0.82rem;color:var(--muted);font-style:italic;margin-bottom:0.8rem;"></div>
+    <textarea id="journal-text" rows="9" placeholder="Escribe aquí..."></textarea>
+    <div class="journal-word-count" id="word-count-display">0 words</div>
+  </div>
+  <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+    <button class="btn btn-primary" onclick="saveEntry()">Save entry</button>
+    <button class="btn btn-secondary" onclick="getJournalFeedback()">Get AI feedback</button>
+  </div>
+  <div class="feedback-box" id="journal-feedback">
+    <h4>Feedback from your tutor</h4>
+    <div id="journal-feedback-text"></div>
+  </div>
+</div>
+
+<div class="card" id="past-entries-card" style="display:none;">
+  <div class="card-label">Past entries</div>
+  <div id="past-entries"></div>
+</div>
+```
+
+  </section>
+
+  <!-- LISTENING -->
+
+  <section id="listening" class="section">
+    <div class="section-header">
+      <h2>Listening</h2>
+      <p>Saturday active listening sessions. Log what you heard and summarize it.</p>
+    </div>
+
+```
+<div class="card">
+  <div class="card-label">Recommended podcasts</div>
+  <div class="podcast-row">
+    <div class="podcast-icon">📻</div>
+    <div class="podcast-info">
+      <div class="podcast-name">Radio Ambulante</div>
+      <div class="podcast-desc">NPR-style narrative journalism from Latin America — best for your level</div>
+    </div>
+    <a href="https://radioambulante.org" target="_blank" class="btn btn-ghost" style="text-decoration:none;white-space:nowrap;">Open ↗</a>
+  </div>
+  <div class="podcast-row">
+    <div class="podcast-icon">🌐</div>
+    <div class="podcast-info">
+      <div class="podcast-name">El hilo</div>
+      <div class="podcast-desc">Deep-dive journalism, one Latin American story per week</div>
+    </div>
+    <a href="https://elhilo.audio" target="_blank" class="btn btn-ghost" style="text-decoration:none;white-space:nowrap;">Open ↗</a>
+  </div>
+  <div class="podcast-row">
+    <div class="podcast-icon">📡</div>
+    <div class="podcast-info">
+      <div class="podcast-name">BBC Mundo</div>
+      <div class="podcast-desc">Short daily briefings — clean, rigorous Spanish for habit-building</div>
+    </div>
+    <a href="https://www.bbc.com/mundo" target="_blank" class="btn btn-ghost" style="text-decoration:none;white-space:nowrap;">Open ↗</a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-label">Log a session</div>
+  <div class="two-col">
+    <div class="form-group">
+      <label>Podcast / show</label>
+      <input type="text" id="log-podcast" placeholder="e.g. Radio Ambulante">
+    </div>
+    <div class="form-group">
+      <label>Minutes listened</label>
+      <input type="number" id="log-minutes" placeholder="15" min="1" max="120">
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Summary in Spanish (at least 2 sentences)</label>
+    <textarea id="log-summary" rows="3" placeholder="Escribe un resumen breve en español..."></textarea>
+  </div>
+  <div style="display:flex;gap:0.6rem;">
+    <button class="btn btn-primary" onclick="logSession()">Log session</button>
+    <button class="btn btn-secondary" onclick="getListeningFeedback()">Get AI feedback on summary</button>
+  </div>
+  <div class="feedback-box" id="listening-feedback">
+    <h4>Feedback</h4>
+    <div id="listening-feedback-text"></div>
+  </div>
+</div>
+
+<div class="card" id="log-history-card" style="display:none;">
+  <div class="card-label">Session log</div>
+  <div id="log-list"></div>
+</div>
+```
+
+  </section>
+
+  <!-- LESSON PREP -->
+
+  <section id="lesson" class="section">
+    <div class="section-header">
+      <h2>Lesson prep</h2>
+      <p>Prepare your weekly 50-minute 1-on-1. Bring materials, not just conversation.</p>
+    </div>
+
+```
+<div class="card">
+  <div class="card-label">This week's lesson agenda</div>
+  <ul class="prep-checklist" id="prep-checklist">
+    <li class="prep-item">
+      <div class="prep-check" onclick="toggleCheck(this)"></div>
+      <div><strong>Review Sunday free write</strong> — share your journal entry; ask for corrections and vocabulary gaps</div>
+    </li>
+    <li class="prep-item">
+      <div class="prep-check" onclick="toggleCheck(this)"></div>
+      <div><strong>Grammar check-in</strong> — go over this week's grammar focus, bring 2–3 sentences you wrote</div>
+    </li>
+    <li class="prep-item">
+      <div class="prep-check" onclick="toggleCheck(this)"></div>
+      <div><strong>Listening debrief</strong> — summarize your Saturday podcast session aloud to your teacher</div>
+    </li>
+    <li class="prep-item">
+      <div class="prep-check" onclick="toggleCheck(this)"></div>
+      <div><strong>Vocabulary review</strong> — bring 5 new words you're not confident on</div>
+    </li>
+    <li class="prep-item">
+      <div class="prep-check" onclick="toggleCheck(this)"></div>
+      <div><strong>Set next week's grammar focus</strong> — agree with your teacher what to practice next</div>
+    </li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-label">Notes for teacher</div>
+  <div class="form-group">
+    <label>What do you want to focus on this lesson?</label>
+    <textarea id="lesson-notes" rows="4" placeholder="e.g. I struggled with imperfect subjunctive in si clauses. I want to practice making hypothetical statements about past events..."></textarea>
+  </div>
+  <div class="form-group">
+    <label>Questions to ask</label>
+    <textarea id="lesson-questions" rows="3" placeholder="e.g. When do I use 'hubiera' vs 'habría'?"></textarea>
+  </div>
+  <button class="btn btn-primary" onclick="saveLessonNotes()">Save notes</button>
+  <div id="lesson-saved" style="display:none;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--sage);margin-top:0.5rem;letter-spacing:0.05em;">✓ SAVED</div>
+</div>
+
+<div class="card">
+  <div class="card-label">Generate a speaking prompt</div>
+  <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;">Get an AI-generated topic tailored to your B1/B2 level to practice with your teacher.</p>
+  <button class="btn btn-secondary" onclick="generateSpeakingPrompt()">Generate prompt</button>
+  <div id="speaking-prompt" style="margin-top:1rem;font-size:0.9rem;line-height:1.6;display:none;"></div>
+</div>
+```
+
+  </section>
+
+</main>
+
+<script>
+// ========== STATE ==========
+let state = {
+  streak: 0,
+  completedDays: [],
+  words: [],
+  journalEntries: [],
+  listeningLogs: [],
+  currentCardIndex: 0,
+  reviewQueue: [],
+  isFlipped: false,
+  grammarWeek: 1,
+  sessions: 0
+};
+
+const STORAGE_KEY = 'estudio_v1';
+
+// Show sync status in header
+function setSyncStatus(msg, color) {
+  const el = document.getElementById('sync-status');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = color || 'var(--gold)';
+}
+
+// Load from cloud storage (with localStorage fallback)
+async function loadState() {
+  setSyncStatus('syncing…');
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) {
+      state = { ...state, ...JSON.parse(result.value) };
+      setSyncStatus('✓ synced', 'var(--gold)');
+      return;
+    }
+  } catch(e) {
+    // Cloud not available, try localStorage
+  }
+  try {
+    const saved = localStorage.getItem('estudio_state');
+    if (saved) {
+      state = { ...state, ...JSON.parse(saved) };
+      setSyncStatus('local only', 'var(--muted)');
+      return;
+    }
+  } catch(e) {}
+  setSyncStatus('new', 'var(--muted)');
+}
+
+// Save to cloud storage (with localStorage fallback)
+async function saveState() {
+  const data = JSON.stringify(state);
+  // Always save locally as immediate backup
+  try { localStorage.setItem('estudio_state', data); } catch(e) {}
+  // Then sync to cloud
+  setSyncStatus('saving…');
+  try {
+    await window.storage.set(STORAGE_KEY, data);
+    setSyncStatus('✓ synced', 'var(--gold)');
+  } catch(e) {
+    setSyncStatus('local only', 'var(--muted)');
+  }
+}
+
+// ========== NAV ==========
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ========== DASHBOARD ==========
+function markDay(idx) {
+  const cell = document.getElementById('day-' + idx);
+  if (cell.classList.contains('completed')) {
+    cell.classList.remove('completed');
+    state.completedDays = state.completedDays.filter(d => d !== idx);
+    state.sessions = Math.max(0, state.sessions - 1);
+  } else {
+    cell.classList.add('completed');
+    if (!state.completedDays.includes(idx)) state.completedDays.push(idx);
+    state.sessions++;
+  }
+  updateStats();
+  saveState();
+}
+
+function updateStats() {
+  document.getElementById('words-learned').textContent = state.words.length;
+  document.getElementById('entries-written').textContent = state.journalEntries.length;
+  document.getElementById('sessions-done').textContent = state.sessions;
+  document.getElementById('streak-display').textContent = state.completedDays.length + ' day streak';
+  state.completedDays.forEach(idx => {
+    document.getElementById('day-' + idx)?.classList.add('completed');
+  });
+}
+
+// ========== VOCABULARY ==========
+async function generateVocab() {
+  const theme = document.getElementById('vocab-theme').value;
+  const btn = document.getElementById('generate-vocab-btn');
+  btn.style.display = 'none';
+  document.getElementById('vocab-generating').style.display = 'block';
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system: `You are a Spanish vocabulary tutor. Generate exactly 8 Spanish vocabulary words for a B1/B2 English-speaking learner interested in ${theme}. Choose words that are genuinely useful, slightly challenging, and feel elegant or literary — not basic. You MUST respond with ONLY a valid JSON object, nothing else, no explanation, no markdown. Use this exact format: {"words":[{"es":"word","pos":"noun","translation":"English meaning","example":"Short example sentence in Spanish"},{"es":"word2","pos":"verb","translation":"English meaning","example":"Example sentence"}]}`,
+        messages: [{ role: 'user', content: `Generate 8 B1/B2 Spanish vocabulary words about the theme: ${theme}. Return only JSON.` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.find(b => b.type === 'text')?.text || '';
+    // Extract JSON even if there's surrounding text
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error('No JSON found in response');
+    const clean = jsonMatch[0];
+    const parsed = JSON.parse(clean);
+    parsed.words.forEach(w => {
+      if (!state.words.find(x => x.es === w.es)) {
+        state.words.push({ ...w, level: 'new', reviews: 0, nextReview: Date.now() });
+      }
+    });
+    state.lastVocabTheme = theme;
+    renderWordList();
+    updateStats();
+    saveState();
+    // Auto-start review with new words
+    state.reviewQueue = parsed.words.map(w => state.words.find(x => x.es === w.es)).filter(Boolean);
+    state.currentCardIndex = 0;
+    state.isFlipped = false;
+    document.getElementById('flashcard-area').style.display = 'block';
+    document.getElementById('vocab-theme-label').textContent = theme.toUpperCase();
+    showCard();
+  } catch(e) {
+    console.error('Vocab error:', e);
+    alert('Could not generate words: ' + e.message);
+  }
+  btn.style.display = 'inline-block';
+  document.getElementById('vocab-generating').style.display = 'none';
+}
+
+function clearWords() {
+  if (!confirm('Clear all words from your word bank?')) return;
+  state.words = [];
+  state.reviewQueue = [];
+  document.getElementById('flashcard-area').style.display = 'none';
+  renderWordList();
+  updateStats();
+  saveState();
+}
+
+function addWord() {
+  const es = document.getElementById('new-word-es').value.trim();
+  const pos = document.getElementById('new-word-pos').value;
+  const en = document.getElementById('new-word-en').value.trim();
+  if (!es) return;
+  const parts = en.split('/');
+  const translation = parts[0]?.trim() || es;
+  const example = parts[1]?.trim() || '';
+  state.words.push({ es, pos, translation, example, level: 'new', reviews: 0, nextReview: Date.now() });
+  document.getElementById('new-word-es').value = '';
+  document.getElementById('new-word-en').value = '';
+  renderWordList();
+  updateStats();
+  saveState();
+}
+
+function renderWordList() {
+  const list = document.getElementById('word-list');
+  const count = state.words.length;
+  document.getElementById('word-count').textContent = count;
+  if (count === 0) {
+    list.innerHTML = '<p style="color:var(--muted);font-size:0.82rem;">No words yet. Add your first one above.</p>';
+    document.getElementById('review-btn').style.display = 'none';
+    return;
+  }
+  document.getElementById('review-btn').style.display = 'inline-block';
+  list.innerHTML = state.words.slice(-10).reverse().map((w, i) => `
+    <div class="word-item">
+      <span class="word-es">${w.es}</span>
+      <span class="word-en">${w.translation}</span>
+      <span class="srs-badge srs-${w.level}">${w.level}</span>
+    </div>
+  `).join('');
+}
+
+function startReview() {
+  state.reviewQueue = [...state.words.filter(w => w.nextReview <= Date.now() + 86400000)];
+  if (state.reviewQueue.length === 0) state.reviewQueue = [...state.words];
+  state.currentCardIndex = 0;
+  state.isFlipped = false;
+  document.getElementById('flashcard-area').style.display = 'block';
+  showCard();
+}
+
+function showCard() {
+  if (state.currentCardIndex >= state.reviewQueue.length) {
+    document.getElementById('flashcard-area').style.display = 'none';
+    alert('Review complete! Great work.');
+    return;
+  }
+  const w = state.reviewQueue[state.currentCardIndex];
+  document.getElementById('card-word').textContent = w.es;
+  document.getElementById('card-pos').textContent = w.pos;
+  document.getElementById('card-translation').textContent = w.translation;
+  document.getElementById('card-example').textContent = w.example || '';
+  document.getElementById('vocab-inner').classList.remove('flipped');
+  state.isFlipped = false;
+  document.getElementById('review-word-num').textContent = state.currentCardIndex + 1;
+  document.getElementById('review-word-total').textContent = state.reviewQueue.length;
+}
+
+function flipCard() {
+  state.isFlipped = !state.isFlipped;
+  document.getElementById('vocab-inner').classList.toggle('flipped', state.isFlipped);
+}
+
+function rateWord(rating) {
+  const intervals = { again: 0, hard: 1, good: 3, easy: 7 };
+  const levels = { again: 'new', hard: 'learning', good: 'learning', easy: 'review' };
+  const w = state.reviewQueue[state.currentCardIndex];
+  const wordIdx = state.words.findIndex(v => v.es === w.es);
+  if (wordIdx >= 0) {
+    state.words[wordIdx].level = levels[rating];
+    state.words[wordIdx].nextReview = Date.now() + intervals[rating] * 86400000;
+    state.words[wordIdx].reviews++;
+  }
+  state.currentCardIndex++;
+  saveState();
+  renderWordList();
+  showCard();
+}
+
+// ========== GRAMMAR ==========
+const grammarData = [
+  { week: 1, title: 'Present Subjunctive Triggers', sub: 'querer que, esperar que, dudar que' },
+  { week: 2, title: 'Imperfect Subjunctive', sub: 'si clauses, reported speech' },
+  { week: 3, title: 'Ser vs. Estar', sub: 'nuanced states, identity vs. condition' },
+  { week: 4, title: 'Preterite vs. Imperfect', sub: 'narrative past, edge cases' },
+  { week: 5, title: 'Por vs. Para', sub: 'cause/purpose, advanced uses' },
+  { week: 6, title: 'Advanced Relative Clauses', sub: 'lo que, cuyo, quien' },
+  { week: 7, title: 'Conditional Perfect', sub: 'habría + past participle, hypotheticals' },
+  { week: 8, title: 'Discourse Connectors', sub: 'opinion writing, essay language' },
+];
+
+function renderGrammarTopics() {
+  const container = document.getElementById('grammar-topics');
+  container.innerHTML = grammarData.map(g => `
+    <div class="grammar-topic" onclick="openGrammarWeek(${g.week})">
+      <div>
+        <div class="grammar-title">Week ${g.week}: ${g.title}</div>
+        <div class="grammar-sub">${g.sub}</div>
+      </div>
+      <span class="grammar-status ${g.week === state.grammarWeek ? 'status-current' : g.week < state.grammarWeek ? 'status-done' : 'status-upcoming'}">
+        ${g.week === state.grammarWeek ? 'Current' : g.week < state.grammarWeek ? 'Done' : 'Upcoming'}
+      </span>
+    </div>
+  `).join('');
+}
+
+async function openGrammarWeek(week) {
+  saveState();
+  renderGrammarTopics();
+
+  const g = grammarData.find(d => d.week === week);
+  const lessonArea = document.getElementById('grammar-lesson-area');
+  const lessonCard = document.getElementById('grammar-lesson-card');
+  const exerciseCard = document.getElementById('grammar-exercise-card');
+
+  lessonArea.style.display = 'block';
+  document.getElementById('lesson-week-label').textContent = `Week ${week} — ${g.title}`;
+  document.getElementById('lesson-content').innerHTML = `<div style="color:var(--muted);font-size:0.85rem;padding:1rem 0;">Loading lesson<span class="loading-dots"></span></div>`;
+  exerciseCard.style.display = 'none';
+  document.getElementById('grammar-sentences').value = '';
+  document.getElementById('grammar-feedback').classList.remove('visible');
+  lessonArea.scrollIntoView({ behavior: 'smooth' });
+
+  // Fetch guided lesson from AI
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system: `You are a warm, clear Spanish grammar tutor for a B1/B2 English-speaking student with a literary, intellectual sensibility. Write a guided grammar lesson on the given topic. 
+
+Structure your lesson in this EXACT format with these EXACT section markers:
+
+[INTRO]
+2-3 sentences contextualizing why this grammar point matters and when you use it. Warm, not textbooky.
+
+[RULE]
+The core rule explained plainly in 2-4 sentences. Use bold for key terms like **subjunctive** or **ser**.
+
+[EXAMPLES]
+3 example sentence pairs (Spanish → English translation), one per line, in this format:
+• Spanish sentence → English translation
+Use culturally resonant examples — music, literature, travel, art where natural.
+
+[TIP]
+One memorable tip or common mistake to avoid. Keep it under 2 sentences.
+
+Keep the whole lesson under 300 words. Do not use any markdown headers or extra formatting beyond what's specified above.`,
+        messages: [{ role: 'user', content: `Write a guided lesson on: ${g.title} (${g.sub})` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.find(b => b.type === 'text')?.text || '';
+    renderLesson(text, g);
+  } catch(e) {
+    document.getElementById('lesson-content').innerHTML = `<p style="color:var(--muted);font-size:0.85rem;">Could not load lesson. Check your connection.</p>`;
+  }
+
+  // Render exercises
+  exerciseCard.style.display = 'block';
+  const container = document.getElementById('exercises-container');
+  container.innerHTML = g.exercises.map((ex, i) => `
+    <div class="grammar-exercise" id="ex-wrap-${i}">
+      <div class="grammar-prompt">${i + 1}. ${ex.prompt}</div>
+      <div style="display:flex;gap:0.5rem;align-items:center;margin-top:0.5rem;flex-wrap:wrap;" class="exercise-row">
+        <input type="text" id="ex-input-${i}" placeholder="Your answer…" style="flex:1;min-width:140px;" onkeydown="if(event.key==='Enter')checkAnswer(${i},'${ex.answer.replace(/'/g,"\\'")}')">
+        <button class="btn btn-secondary" style="padding:0.5rem 0.9rem;font-size:0.7rem;white-space:nowrap;" onclick="checkAnswer(${i},'${ex.answer.replace(/'/g,"\\'")}')">Check</button>
+      </div>
+      <div id="ex-result-${i}" style="margin-top:0.5rem;font-size:0.82rem;display:none;"></div>
+      <div class="grammar-answer" id="answer-${i}" style="margin-top:0.4rem;">${ex.answer}</div>
+    </div>
+  `).join('');
+}
+
+function renderLesson(text, g) {
+  const section = (marker) => {
+    const regex = new RegExp(`\\[${marker}\\]([\\s\\S]*?)(?=\\[|$)`);
+    const match = text.match(regex);
+    return match ? match[1].trim() : '';
+  };
+  const intro = section('INTRO');
+  const rule = section('RULE');
+  const examples = section('EXAMPLES');
+  const tip = section('TIP');
+
+  const formatBold = s => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  const formatExamples = s => s.split('\n').filter(l => l.trim()).map(l => {
+    const parts = l.replace(/^•\s*/, '').split('→');
+    if (parts.length === 2) {
+      return `<div style="display:flex;gap:0.8rem;padding:0.45rem 0;border-bottom:1px solid var(--cream);font-size:0.87rem;flex-wrap:wrap;">
+        <span style="font-weight:500;flex:1;">${parts[0].trim()}</span>
+        <span style="color:var(--muted);font-style:italic;flex:1;">${parts[1].trim()}</span>
+      </div>`;
+    }
+    return `<div style="padding:0.4rem 0;font-size:0.87rem;">${l}</div>`;
+  }).join('');
+
+  document.getElementById('lesson-content').innerHTML = `
+    ${intro ? `<p class="lesson-intro">${formatBold(intro)}</p>` : ''}
+    ${rule ? `<div class="lesson-rule">${formatBold(rule)}</div>` : ''}
+    ${examples ? `<div class="lesson-examples"><div class="card-label" style="margin-bottom:0.5rem;">Examples</div>${formatExamples(examples)}</div>` : ''}
+    ${tip ? `<div style="background:var(--cream);border-radius:1px;padding:0.8rem 1rem;font-size:0.82rem;color:var(--ink);line-height:1.5;"><span style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.3rem;">Tip</span>${formatBold(tip)}</div>` : ''}
+  `;
+}
+
+function checkAnswer(i, correctAnswer) {
+  const input = document.getElementById(`ex-input-${i}`);
+  const result = document.getElementById(`ex-result-${i}`);
+  const answerDiv = document.getElementById(`answer-${i}`);
+  const userAnswer = input.value.trim().toLowerCase();
+  const correct = correctAnswer.toLowerCase();
+
+  result.style.display = 'block';
+  // Flexible matching — check if key words from answer appear in user's response
+  const keyWords = correct.replace(/[()]/g, '').split(/[\s,\/]+/).filter(w => w.length > 3);
+  const matches = keyWords.filter(w => userAnswer.includes(w)).length;
+  const score = keyWords.length > 0 ? matches / keyWords.length : 0;
+
+  if (score >= 0.5 || userAnswer === correct) {
+    result.innerHTML = `<span style="color:var(--sage);">✓ Correct! </span>`;
+    answerDiv.classList.add('visible');
+    input.style.borderColor = 'var(--sage)';
+  } else if (userAnswer.length > 0) {
+    result.innerHTML = `<span style="color:var(--terracotta);">Not quite — </span><span style="color:var(--muted);">check the answer below.</span>`;
+    answerDiv.classList.add('visible');
+    input.style.borderColor = 'var(--terracotta)';
+  } else {
+    result.innerHTML = `<span style="color:var(--muted);">Type your answer first.</span>`;
+  }
+}
+
+async function getGrammarFeedback() {
+  const sentences = document.getElementById('grammar-sentences').value.trim();
+  if (!sentences) { alert('Write some sentences first!'); return; }
+  const g = grammarData.find(d => d.week === state.grammarWeek);
+  const btn = event.target;
+  btn.textContent = 'Getting feedback';
+  btn.classList.add('loading-dots');
+  btn.disabled = true;
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system: `You are a warm, encouraging Spanish tutor for an intermediate-advanced (B1/B2) English-speaking student. The student is practicing: ${g.title} (${g.sub}). Give concise, specific feedback on their sentences. Note errors, suggest improvements, and highlight what they did well. Keep feedback under 150 words. Respond in English.`,
+        messages: [{ role: 'user', content: `Please give feedback on these Spanish sentences I wrote practicing ${g.title}:\n\n${sentences}` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.find(b => b.type === 'text')?.text || 'Unable to get feedback.';
+    document.getElementById('grammar-feedback-text').textContent = text;
+    document.getElementById('grammar-feedback').classList.add('visible');
+  } catch(e) {
+    document.getElementById('grammar-feedback-text').textContent = 'Could not connect. Check your connection and try again.';
+    document.getElementById('grammar-feedback').classList.add('visible');
+  }
+  btn.textContent = 'Get AI feedback';
+  btn.classList.remove('loading-dots');
+  btn.disabled = false;
+}
+
+// ========== JOURNAL ==========
+function initJournal() {
+  const now = new Date();
+  document.getElementById('today-date').textContent = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById('journal-text').addEventListener('input', function() {
+    const words = this.value.trim().split(/\s+/).filter(w => w).length;
+    document.getElementById('word-count-display').textContent = words + ' words';
+  });
+  document.getElementById('journal-prompt').addEventListener('change', function() {
+    document.getElementById('prompt-display').textContent = this.value;
+  });
+  renderJournalEntries();
+}
+
+function saveEntry() {
+  const text = document.getElementById('journal-text').value.trim();
+  if (!text) return;
+  const entry = {
+    text,
+    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    words: text.split(/\s+/).filter(w => w).length
+  };
+  state.journalEntries.unshift(entry);
+  document.getElementById('journal-text').value = '';
+  document.getElementById('word-count-display').textContent = '0 words';
+  updateStats();
+  saveState();
+  renderJournalEntries();
+}
+
+function renderJournalEntries() {
+  const container = document.getElementById('past-entries');
+  const card = document.getElementById('past-entries-card');
+  if (state.journalEntries.length === 0) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  container.innerHTML = state.journalEntries.slice(0, 5).map(e => `
+    <div class="journal-entry">
+      <div class="journal-date-stamp">${e.date}</div>
+      <div>
+        <div class="journal-text">${e.text.substring(0, 200)}${e.text.length > 200 ? '…' : ''}</div>
+        <div class="journal-word-count">${e.words} words</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function getJournalFeedback() {
+  const text = document.getElementById('journal-text').value.trim();
+  if (!text) { alert('Write something first!'); return; }
+  const btn = event.target;
+  btn.textContent = 'Getting feedback';
+  btn.classList.add('loading-dots');
+  btn.disabled = true;
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system: 'You are a thoughtful Spanish tutor for a B1/B2 student. Review their free-write journal entry. Give warm, constructive feedback: note 2-3 grammar points to review with their teacher, flag any vocabulary that could be elevated, and highlight 1-2 things they did well. Keep under 200 words. End with a suggested question to discuss in their lesson. Respond in English.',
+        messages: [{ role: 'user', content: `Here is my free-write journal entry in Spanish:\n\n${text}` }]
+      })
+    });
+    const data = await resp.json();
+    const feedbackText = data.content?.find(b => b.type === 'text')?.text || 'Unable to get feedback.';
+    document.getElementById('journal-feedback-text').textContent = feedbackText;
+    document.getElementById('journal-feedback').classList.add('visible');
+  } catch(e) {
+    document.getElementById('journal-feedback-text').textContent = 'Could not connect. Try again.';
+    document.getElementById('journal-feedback').classList.add('visible');
+  }
+  btn.textContent = 'Get AI feedback';
+  btn.classList.remove('loading-dots');
+  btn.disabled = false;
+}
+
+// ========== LISTENING ==========
+function logSession() {
+  const podcast = document.getElementById('log-podcast').value.trim();
+  const minutes = document.getElementById('log-minutes').value;
+  const summary = document.getElementById('log-summary').value.trim();
+  if (!podcast || !summary) { alert('Please fill in the podcast name and summary.'); return; }
+  state.listeningLogs.unshift({
+    podcast,
+    minutes: minutes || '?',
+    summary,
+    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  });
+  state.sessions++;
+  document.getElementById('log-podcast').value = '';
+  document.getElementById('log-minutes').value = '';
+  document.getElementById('log-summary').value = '';
+  document.getElementById('listening-feedback').classList.remove('visible');
+  updateStats();
+  saveState();
+  renderLogHistory();
+}
+
+function renderLogHistory() {
+  const container = document.getElementById('log-list');
+  const card = document.getElementById('log-history-card');
+  if (state.listeningLogs.length === 0) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  container.innerHTML = state.listeningLogs.slice(0, 8).map(l => `
+    <div class="log-item">
+      <div class="log-dot"></div>
+      <div class="log-podcast">${l.podcast}</div>
+      <div class="log-time">${l.date} · ${l.minutes} min</div>
+    </div>
+  `).join('');
+}
+
+async function getListeningFeedback() {
+  const summary = document.getElementById('log-summary').value.trim();
+  if (!summary) { alert('Write a summary first!'); return; }
+  const btn = event.target;
+  btn.textContent = 'Getting feedback';
+  btn.classList.add('loading-dots');
+  btn.disabled = true;
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system: 'You are a Spanish tutor reviewing a B1/B2 student\'s listening summary. They wrote a brief summary in Spanish of a podcast they heard. Give concise feedback: grammar corrections, vocabulary suggestions, and what they expressed well. Under 150 words. In English.',
+        messages: [{ role: 'user', content: `My Spanish listening summary:\n\n${summary}` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.find(b => b.type === 'text')?.text || 'Could not get feedback.';
+    document.getElementById('listening-feedback-text').textContent = text;
+    document.getElementById('listening-feedback').classList.add('visible');
+  } catch(e) {
+    document.getElementById('listening-feedback-text').textContent = 'Could not connect. Try again.';
+    document.getElementById('listening-feedback').classList.add('visible');
+  }
+  btn.textContent = 'Get AI feedback on summary';
+  btn.classList.remove('loading-dots');
+  btn.disabled = false;
+}
+
+// ========== LESSON PREP ==========
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  if (el.classList.contains('checked')) el.textContent = '✓';
+  else el.textContent = '';
+}
+
+function saveLessonNotes() {
+  const notes = document.getElementById('lesson-notes').value;
+  const questions = document.getElementById('lesson-questions').value;
+  state.lessonNotes = { notes, questions };
+  saveState();
+  const saved = document.getElementById('lesson-saved');
+  saved.style.display = 'block';
+  setTimeout(() => saved.style.display = 'none', 2000);
+}
+
+async function generateSpeakingPrompt() {
+  const btn = event.target;
+  btn.textContent = 'Generating';
+  btn.classList.add('loading-dots');
+  btn.disabled = true;
+  const promptEl = document.getElementById('speaking-prompt');
+  promptEl.style.display = 'none';
+  try {
+    const g = grammarData.find(d => d.week === state.grammarWeek);
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: 'Generate a single engaging speaking prompt for a B1/B2 Spanish learner to discuss with their teacher. The prompt should naturally encourage use of the current grammar focus. Make it intellectually interesting — something an educated adult would enjoy discussing. Include 2-3 follow-up questions. Keep it under 120 words total. In English.',
+        messages: [{ role: 'user', content: `Current grammar focus: ${g?.title} (${g?.sub}). Generate a speaking prompt.` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.find(b => b.type === 'text')?.text || '';
+    promptEl.textContent = text;
+    promptEl.style.display = 'block';
+  } catch(e) {
+    promptEl.textContent = 'Could not generate prompt. Check your connection.';
+    promptEl.style.display = 'block';
+  }
+  btn.textContent = 'Generate prompt';
+  btn.classList.remove('loading-dots');
+  btn.disabled = false;
+}
+
+// ========== INIT ==========
+(async () => {
+  // Remove any stray backtick text nodes (from old cached versions)
+  document.querySelectorAll('*').forEach(el => {
+    el.childNodes.forEach(node => {
+      if (node.nodeType === 3 && node.textContent.includes('`')) {
+        node.textContent = node.textContent.replace(/`+/g, '');
+      }
+    });
+  });
+  await loadState();
+  updateStats();
+  renderWordList();
+  renderGrammarTopics();
+  initJournal();
+  renderLogHistory();
+
+  // Restore lesson notes
+  if (state.lessonNotes) {
+    document.getElementById('lesson-notes').value = state.lessonNotes.notes || '';
+    document.getElementById('lesson-questions').value = state.lessonNotes.questions || '';
+  }
+
+  // Highlight today — force inline styles to guarantee visibility regardless of CSS
+  document.querySelectorAll('.day-cell').forEach(c => c.classList.remove('active-day'));
+  const todayIdx = new Date().getDay(); // 0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat
+  const dayMap = { 0: 6, 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5 };
+  const todayCell = document.getElementById('day-' + dayMap[todayIdx]);
+  if (todayCell && !todayCell.classList.contains('completed')) {
+    todayCell.classList.add('active-day');
+    todayCell.style.cssText += ';background:#c4623a!important;border-color:#9e4a28!important;color:white!important;';
+    todayCell.querySelectorAll('*').forEach(el => {
+      el.style.cssText += ';color:white!important;opacity:1!important;';
+    });
+  }
+// ========== PWA SERVICE WORKER ==========
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+})();
+</script>
+
+</body>
+</html>
