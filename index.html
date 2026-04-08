@@ -1324,22 +1324,26 @@ function setSyncStatus(msg, color) {
 
 // Load from cloud storage (with localStorage fallback)
 async function loadState() {
-  setSyncStatus('syncing…');
-  try {
-    const result = await window.storage.get(STORAGE_KEY);
-    if (result && result.value) {
-      state = { ...state, ...JSON.parse(result.value) };
-      setSyncStatus('✓ synced', 'var(--gold)');
-      return;
+  setSyncStatus('loading…');
+  // Try cloud storage only if available (Claude artifact environment)
+  if (window.storage && typeof window.storage.get === 'function') {
+    try {
+      const result = await window.storage.get(STORAGE_KEY);
+      if (result && result.value) {
+        state = { ...state, ...JSON.parse(result.value) };
+        setSyncStatus('✓ synced', 'var(--gold)');
+        return;
+      }
+    } catch(e) {
+      console.log('Cloud storage unavailable, using localStorage');
     }
-  } catch(e) {
-    // Cloud not available, try localStorage
   }
+  // Fall back to localStorage
   try {
     const saved = localStorage.getItem('estudio_state');
     if (saved) {
       state = { ...state, ...JSON.parse(saved) };
-      setSyncStatus('local only', 'var(--muted)');
+      setSyncStatus('✓ local', 'var(--gold)');
       return;
     }
   } catch(e) {}
@@ -1349,15 +1353,19 @@ async function loadState() {
 // Save to cloud storage (with localStorage fallback)
 async function saveState() {
   const data = JSON.stringify(state);
-  // Always save locally as immediate backup
+  // Always save locally first
   try { localStorage.setItem('estudio_state', data); } catch(e) {}
-  // Then sync to cloud
-  setSyncStatus('saving…');
-  try {
-    await window.storage.set(STORAGE_KEY, data);
-    setSyncStatus('✓ synced', 'var(--gold)');
-  } catch(e) {
-    setSyncStatus('local only', 'var(--muted)');
+  // Try cloud if available
+  if (window.storage && typeof window.storage.set === 'function') {
+    setSyncStatus('saving…');
+    try {
+      await window.storage.set(STORAGE_KEY, data);
+      setSyncStatus('✓ synced', 'var(--gold)');
+    } catch(e) {
+      setSyncStatus('✓ local', 'var(--gold)');
+    }
+  } else {
+    setSyncStatus('✓ saved', 'var(--gold)');
   }
 }
 
